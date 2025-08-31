@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Escolar - ENEE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box;}
+
+    body, html {
+      font-family: 'Inter', sans-serif;
+      color: #2c2c2c;
+      background-color: #fdfdfd;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4e232e;
+      transition: background-color 0.3s ease, padding 0.3s ease;
+      z-index: 1000;
+    }
+
+    header.scrolled {
+      background-color: #4e232e;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      padding: 10px 30px;
+    }
+
+    .logo {
+      height: 50px;
+      width: auto;
+      transition: height 0.3s ease;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      margin-right: 20px;
+    }
+
+    header a {
+      color: #fcf9f9;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 17px;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    header a:hover {
+      color: #977e5b;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background-color: #56212f;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 250px;
+      padding: px 0;
+      gap: 15px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      border-bottom-left-radius: 8px;
+    }
+
+    .mobile-menu.show {
+      display: flex;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .mobile-menu a {
+      color: #f4d7b4;
+      font-size: 18px;
+      padding: 10px 0;
+      width: 100%;
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      background-image: url(carpetas.png);
+      background-color: #56212f;
+      height: 150vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d6d1ca00;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+      
+    }
+
+    .hero-content {
+      background-color: rgba(255, 255, 255, 0.021);
+      padding: 40px;
+      border-radius: 10px;
+      max-width: 90%;
+    }
+
+    .hero h1 {
+      font-size: 3.8em;
+      color: #4e232e;
+      margin-bottom: 20px;
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+      scroll-margin-top: 90px;
+    }
+
+    section h2 {
+      font-size: 2.2em;
+      color: #56212f;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    section h2::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #977e5b;
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+
+    section p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1em;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .dark-section {
+      background: #eaeaea;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 20px auto;
+      display: none;
+    }
+
+    h1, h2, h3 {
+      color: #56212f;
+      align-items: center;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      text-align: left;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    b {
+      color: #000;
+    }
+
+    a {
+      color: #56212f;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background-color: #56212f;
+      color: #d6d1ca;
+      border: none;
+      border-radius: 5px;
+      margin: 10px 5px;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s, transform 0.2s;
+      text-align: center;
+      max-width: 100%;
+    }
+
+    .btn:hover {
+      background-color: #3a1720;
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .izq {
+      width: 90%;
+      margin: 0 auto;
+      text-align: left;
+      padding: 20px 0;
+    }
+    
+    .cent {
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .card {
+      align-items: center;
+      border: 2px solid #c40000;
+      border-radius: 10px;
+      padding: 20px;
+      width: 100%;
+      max-width: 420px;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .card img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #c40000;
+    }
+    
+    .presentacion {         
+      display: block;
+      margin: 40px auto;
+      max-width: 90%;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      filter: brightness(0.98);
+      cursor: pointer;
+      padding: 20px;
+    }
+    
+    .presentacion:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+      filter: brightness(1.05);
+    }
+    
+    .body-1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      background-color: #f0f0f0;
+      padding: 20px 0;
+    }
+  
+    .container-1 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      width: 90%;
+      padding: 20px;
+    }
+    
+    .item-card-1 {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      height: 100%;
+      min-height: 220px;
+    }
+    
+    .item-card-1:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .item-card-1 img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 15px;
+      object-fit: contain;
+    }
+    
+    .item-card-1 p {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin: 0;
+      color: #333;
+    }
+
+    .bottom-bar {
+      background-color: #56212f;
+      height: 8px;
+      width: 100%;
+      margin-top: 15px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    
+    .contact-info {
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 600px;
+    }
+    
+    .contact-info h3 {
+      margin-bottom: 15px;
+      color: #56212f;
+    }
+    
+    .contact-info p {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      background-color: #4e232e;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    footer p {
+      text-align: center;
+      margin: 10px 0;
+      color: #fdfdfc;
+    }
+    
+    footer p strong {
+      color: white;
+    }
+
+    
+    @media (max-width: 1024px) {
+      .hero h1 {
+        font-size: 3.2em;
+      }
+      
+      .nav-links {
+        gap: 15px;
+      }
+      
+      header a {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 20px;
+      }
+      
+      .logo {
+        height: 40px;
+      }
+      
+      .nav-links { 
+        display: none; 
+      }
+      
+      .hamburger { 
+        display: flex; 
+      }
+      
+      .hero {
+        height: 60vh;
+        margin-top: 10px;
+      }
+      
+      .hero h1 {
+        font-size: 2.5em;
+      }
+      
+      .hero-content {
+        padding: 25px;
+      }
+      
+      section {
+        padding: 60px 15px;
+        scroll-margin-top: 70px;
+      }
+      
+      section h2 {
+        font-size: 1.8em;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 10px 0;
+      }
+      
+      .container-1 {
+        grid-template-columns: 1fr;
+        width: 100%;
+        padding: 10px;
+      }
+      
+      .cent {
+        width: 100%;
+        padding: 10px;
+
+
+      }
+      
+      .presentacion {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 10px 15px;
+      }
+      
+      .logo {
+        height: 35px;
+      }
+      
+      .hero {
+        height: 50vh;
+      }
+      
+      .hero h1 {
+        font-size: 2em;
+      }
+      
+      section {
+        padding: 50px 10px;
+      }
+      
+      section h2 {
+        font-size: 1.6em;
+      }
+      
+      section p {
+        font-size: 1em;
+        text-align: left;
+      }
+      
+      .card {
+        padding: 15px;
+      }
+      
+      .card img {
+        width: 80px;
+      }
+      
+      .item-card-1 {
+        min-height: 200px;
+        padding: 20px 10px;
+      }
+      
+      .item-card-1 img {
+        width: 70px;
+        height: 70px;
+      }
+      
+      footer {
+        padding: 30px 15px;
+      }
+      
+      .mobile-menu {
+        width: 100%;
+        right: 0;
+        border-radius: 0;
+      }
+    }
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+  </style>  
+</head>
+<body>
+  <header>
+    <img src="logo_enm_4k.png" alt="ENEEEM Logo" class="logo" />
+    <div class="nav-container">
+      <div class="nav-links">
+        <a href="#avisos">Avisos de Privacidad</a>
+        <a href="#cuotas">Cuotas Vigentes</a>
+        <a href="#documentos">Documentos Normativos</a>
+        <a href="#plataformas">Plataformas</a>
+        <a href="#iso">Proceso ISO</a>
+        <a href="index.html">Inicio</a>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="#avisos" onclick="toggleMenu()">Avisos de Privacidad</a>
+      <a href="#cuotas" onclick="toggleMenu()">Cuotas Vigentes</a>
+      <a href="#documentos" onclick="toggleMenu()">Documentos Normativos</a>
+      <a href="#plataformas" onclick="toggleMenu()">Plataformas</a>
+      <a href="#iso" onclick="toggleMenu()">Proceso ISO</a>
+      <a href="index.html">Inicio</a>
+    </div>
+  </header>
+  <div class="hero" class="*">
+    <div class="hero-content">
+      <h1>Control Escolar</h1>
+    </div>
+  </div>
+
+  <section id="avisos">
+    <h2>AVISO DE PRIVACIDAD</h2>
+    <p>CON BASE EN LO DISPUESTO POR LA LEY DE PROTECCIÓN DE DATOS PERSONALES DEL
+       ESTADO DE MÉXICO EN SUS ARTÍCULOS 1, 3, 5, 7, 15, 17, 18, 19 y 20, ASÍ COMO
+        DE LA LEY DE TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA DEL ESTADO DE
+        MÉXICO Y MUNICIPIOS, EN SUS ARTÍCULOS 1, 3, 4, 6, 7, 11, 12, 23, 25, ORDENAMIENTOS
+       QUE TIENEN POR OBJETO ESTABLECER LAS BASES, PRINCIPIOS Y PROCEDIMIENTOS PARA TUTELAR Y GARANTIZAR LA TRANSPARENCIA Y EL DERECHO QUE TIENE TODA PERSONA A LA PROTECCIÓN DE SU DATOS PERSONALES Y EL ACCESO A LA INFORMACIÓN PÚBLICA EN POSESIÓN DE LOS SUJETOS OBLIGADOS, SE SEÑALA LO SIGUIENTE:
+    </p>
+    <h3>AVISO DE PRIVACIDAD DE DATOS PERSONALES.</h3>
+    <p>Toda la información que se proporcione y se maneje con motivo de las normas específicas de control escolar 
+      relativas a las selección, inscripción, reinscripción, acreditación, regularización,</p>
+  </section>
+
+  <section class="dark-section" id="cuotas">
+    <h2>Cuotas Vigentes</h2>
+    <h3>2024-2025</h3>
+    <div class="presentacion">
+      <div class="card">
+        <img src="Santander-Logo-650x366.png" alt="Logo Santander">
+        <div class="info">
+          <div><span class="label">NO. de Cuenta Santander</span></div>
+          <br>
+          <div><span class="label">CTA:</span> 65-50721853-8</div>
+          <div><span class="label">CLABE:</span> 014180655072185382</div>
+        </div>
+      </div>
+      <br>
+      <a href="https://drive.google.com/file/d/1nY_HxKfrCbgY9uDB7YUKjxRqZOkHVTkl/view" class="btn">Descargar cuotas de pago.pdf</a>
+    </div>
+  </section>
+
+  <section id="documentos">
+    <h2>Documentos Normativos</h2>
+    <a href="https://dgesum.sep.gob.mx/storage/recursos/normatividad/normas_control_escolar/MgIOjSo38A-NCE_ENP_2018.pdf" class="btn">Normas Control Escolar Plan 2018</a>
+    <a href="https://dgesum.sep.gob.mx/storage/recursos/normatividad/a7nqe9Glbt-NCE_ENP_2022.pdf" class="btn">Normas Control Escolar Plan 2022</a>
+    <a href="https://drive.google.com/file/d/1DfEUir79t4yhKHSCvymDhoH6stiHeH7O/view" class="btn">Reglamento Estudiantil</a>
+    
+    <div class="contact-info">
+      <p>Si deseas hacer aportaciones para el sitio o si tienes dudas sobre la Comisión de Titulación,</p>
+      <h3>puedes contactarnos en</h3>
+      <p>titulacioneneeem@gmail.com</p>
+      <p>morenojuanbd@eneem.edu.mx</p>
+    </div>
+  </section>
+
+  <section class="dark-section" id="plataformas">
+    <h2>Plataformas</h2>
+    <p>Estas son las plataformas que se utilizan dentro de en nuestra institución, así como un respectivo manual para su correcto empleo de las mismas</p>
+    <div class="body-1">
+      <div class="container-1">
+        <a href="https://edugem.gob.mx/Ccesc/LoginAlumPad.aspx" class="item-card-1">
+          <img src="alumnos.png" alt="Icono de alumnos">
+          <p>Plataforma Alumnos</p>
+          <div class="bottom-bar"></div>
+        </a>
+        <a href="https://drive.google.com/file/d/1EcMoNkSWkXQ0wkl8z7eeh-gV6w3VSQ4-/view" class="item-card-1">
+          <img src="manual.png" alt="Icono de Manual">
+          <p>Formatos de Certificación</p>
+          <div class="bottom-bar"></div>
+        </a>
+        <a href="https://youtu.be/v1_QpDrJPPw?si=zyT49P7CUfy0GkBS" class="item-card-1">
+          <img src="tutorial.png" alt="Icono tutoríal">
+          <p>Tutorial de contraseña</p>
+          <div class="bottom-bar"></div>
+        </a>
+        <a href="https://edugem.gob.mx/Ccesc/loginProf.aspx" class="item-card-1">
+          <img src="profesores.png" alt="Icono de profesores">
+          <p>Plataforma Profesores</p>
+          <div class="bottom-bar"></div>
+        </a>
+      </div>
+    </div> 
+  </section>
+
+<section id="iso" class="dark-section">
+  <BR>
+  </BR>
+    <BR>
+    </BR>
+    <h2>Proceso ISO</h2>
+    <p style="color: #977e5b;">Proceso de Control Escolar.</p>
+    <p>
+        En concordancia con las Normas de Control Escolar, los procedimientos en el Sistema de Gestión de la Calidad certificados bajo la norma ISO 9001:2015 son los siguientes:
+    </p>
+    
+        <p> - Selección de aspirantes.</p>
+        <p> - Inscripción.</p>
+        <p> - Reinscripción.</p>
+        <p> - Acreditación y Regularización.</p>
+        <p> - Certificación.</p>
+        <p> - Titulación.</p>
+    
+
+
+    <p style="color: #977e5b;">Objetivo de calidad del Proceso de Control Escolar.</p>
+    <p>
+        Lograr el 100% de satisfacción de los usuarios en relación con los bienes y servicios que ofrece el departamento de control escolar con base en la normatividad vigente.
+    </p>
+<br>
+  <div style="margin-top: 20px;">
+<a href="https://enpemsgc2017.wixsite.com/iso9001" class="btn" > Sistema de Gestión de la Calidad ISO 9001:2015</a>
+  </div>
+<br>
+
+  <div style="margin-top: 20px;">
+    <button class="btn" onclick="mostrarInformacion()">ISO 9001:2015</button>
+  </div>
+</section>
+
+<!-- Información ISO oculta -->
+ <div class="container" id="infoISO">
+        <h1>Sistema de Gestión de Calidad de la Subdirección de Educación Normal y ENPEM</h1>
+
+        <p>El Sistema de Gestión de Calidad de la <em>Subdirección de Educación Normal y de las 36 Escuelas Normales Públicas del Estado de México (ENPEM)</em> se determina con base en la misión de estas Instituciones, cuya finalidad es la <em>formación de docentes</em>. Su implementación corresponde a los siguientes procesos:</p>
+
+        <p>El alcance del Sistema de Gestión de la Calidad de la <em>SEN y de las 36 ENPEM</em> aplica a los siguientes procesos: <b>Directivo, Docencia, Investigación e innovación educativa, Formación continua, Movilidad académica, Control Escolar, Extensión académica y difusión cultural, Recursos Humanos, Recursos Financieros y Recursos Materiales y Servicios Generales</b>; los cuales consideran veintitrés procedimientos enunciados en el presente documento.</p>
+
+        <p>Dicho alcance se implementa, desarrolla y aplica a través de <em>10 Procesos y 23 procedimientos académico-administrativos</em> que se describen a continuación:</p>
+
+        <h2>Procesos en la Subdirección de Educación Normal (SEN)</h2>
+        <ol>
+            <li><b>Directivo</b> con los siguientes procedimientos:
+                <ul>
+                    <li>Planeación de la Subdirección de Educación Normal</li>
+                    <li>Administración del Sistema de Gestión de la Calidad.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>Procesos Sustantivos de las 36 (ENPEM)</h2>
+        <ol start="2">
+            <li><b>Docencia</b>
+                <ul>
+                    <li>Elaboración de Planificación Docente</li>
+                    <li>Seguimiento y Evaluación a la Aplicación de la Planificación Docente</li>
+                    <li>Seguimiento a egresados.</li>
+                </ul>
+            </li>
+            <li><b>Investigación e innovación educativa.</b></li>
+            <li><b>Formación continua.</b></li>
+            <li><b>Movilidad académica.</b></li>
+            <li><b>Control Escolar</b> (que se realizan en el Departamento de Control Escolar)
+                <ul>
+                    <li>Selección de aspirantes</li>
+                    <li>Inscripción</li>
+                    <li>Reinscripción</li>
+                    <li>Acreditación y regularización</li>
+                    <li>Certificación</li>
+                    <li>Titulación</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>Procesos de Apoyo</h2>
+        <ol>
+            <li><b>Extensión académica y difusión cultural.</b></li>
+            <li><b>Recursos Humanos</b> (que se realizan en el Departamento de Recursos Humanos)
+                <ul>
+                    <li>Elaboración de Plantilla de Personal</li>
+                    <li>Integración del Expediente Personal</li>
+                    <li>Elaboración del Reporte de Inasistencia</li>
+                </ul>
+            </li>
+            <li><b>Recursos Financieros</b> (que se realizan en el Departamento de Recursos Financieros)
+                <ul>
+                    <li>Elaboración, Control y Seguimiento de Plan Presupuestal</li>
+                    <li>Integración del Informe Financiero Bimestral</li>
+                    <li>Adquisiciones</li>
+                </ul>
+            </li>
+            <li><b>Recursos Materiales y Servicios Generales</b> (que se realiza en el Departamento de Recursos Materiales y Servicios Generales)
+                <ul>
+                    <li>Inventario de bienes muebles</li>
+                    <li>Control de bienes consumibles</li>
+                </ul>
+            </li>
+        </ol>
+
+        <p>Para conocer a fondo todo lo relacionado al Sistema de Gestión de la Calidad en las Escuelas Normales Públicas del Estado de México, puedes ingresar a los siguientes enlaces:</p>
+        <br>
+        <br>
+        <div>
+           <a href="https://enpemsgc2017.wixsite.com/iso9001/guia-de-la-calidad" class="btn"> GUÍA DE LA CALIDAD </a>
+        </div>
+        <br>
+        
+</div>
+    <footer>
+    <p><strong>Control Escolar 
+    </p>
+    <br>
+      <p>
+    </strong> - Escuela Normal de Educación Especial de el Estado de México -</p>
+    <br>
+    </ion-icon><p> eneducacionespecial@gmail.com | Tel: 55 58204327</p>
+    <p>_____________________________________________________________________________________________</p>
+    <p>&copy; 2025 Todos los derechos reservados.</p>
+  </footer>
+
+
+  <script>
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    function toggleMenu() {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      mobileMenu.classList.toggle('show');
+      
+      const spans = document.querySelectorAll('.hamburger span');
+      if (mobileMenu.classList.contains('show')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    }
+
+    function mostrarInformacion() {
+      const info = document.getElementById("infoISO");
+      info.style.display = info.style.display === "none" || info.style.display === "" ? "block" : "none";
+      
+      
+      if (info.style.display === "block") {
+        info.scrollIntoView({behavior: "smooth"});
+      }
+    }
+    
+    // Cerrar menú móvil al hacer clic en un enlace
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', toggleMenu);
+    });
+  </script>
+</body>
+</html>

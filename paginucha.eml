@@ -1,0 +1,732 @@
+Delivered-To: 23307057@utfv.edu.mx
+Received: by 2002:a05:612c:4795:b0:4ed:f154:69e8 with SMTP id ly21csp515984vqb;
+        Fri, 29 Aug 2025 09:36:41 -0700 (PDT)
+X-Received: by 2002:a05:6102:c0e:b0:519:534a:6c4b with SMTP id ada2fe7eead31-52919282aebmr2317549137.29.1756485401713;
+        Fri, 29 Aug 2025 09:36:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756485401; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Afmh/7n0k/9keomFs6OKpzT0MUAaNTbgojyyXhWLzjCuP6gBqRh1Fz2mpIkYFS4h5a
+         RpwIX5LUjnPTSrQ0sSrOeoPYspexoqqqZJHazBADQBcAvmsFwqENaAXfXmapKAZG+zXl
+         4vKLfGAcjI3uw2HF5RPrlP4hZYsaXDe7+hbyZ3b59r4H/jG9cEQnYjVNbZ4hAv4ikvRO
+         vs19Pj3rQ+5WlQqZEs0Jo2AxJBNqf+bYVg56p1OpBysc+G4tX2aY4hU9Aog+r8UPzuYV
+         5UhjWZsG4Smp6bP+ksL4AskvnxYpShE/yY+zlhEAwVWNyeipuU1STVvDssktP+gG4lqL
+         D7gQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=5xKZItOlW4HQ01yYAhbl6mexGolubKJpURXndXIbYj8=;
+        fh=EGBJjBNig9UPGKThfWM5oz/t+94a5EPdHpGrExSNMhI=;
+        b=MB2JPsdL/zqW7XcMPKsp3dnqPMeiTie22Vo25LXv+pTgVMAtJOlVduylDrGQ+c9FMU
+         EcS+rVpETbi70iUEenfPTsioNYaGenSWHsx1SHM0uaK4FQjTO0I+5Ojrd1oKqgVche4p
+         8rLzo1hiL3Ac8Tj+OUTf4pufRJqlXzTFBegiUYJ++MmgolswC4TYvtx1gMb4HqcZ0HZN
+         UWpasGlbY+RwZoIiwqVL3Eb+h/mjPFQR5c4z9c4bYMtRZOClFG1pFG2eDf4+Oo+5BVfc
+         XTnpFjxkgWdsZ+yRUQutBPOmCfTnnIu+88PWPkPTEiWeXkInLbN6oPV1gBQQ+fyjzRqq
+         J72g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@utfv-edu-mx.20230601.gappssmtp.com header.s=20230601 header.b=oHHanYrP;
+       spf=pass (google.com: domain of 23307066@utfv.edu.mx designates 209.85.220.41 as permitted sender) smtp.mailfrom=23307066@utfv.edu.mx;
+       dara=pass header.i=@utfv.edu.mx
+Return-Path: <23307066@utfv.edu.mx>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a1e0cc1a2514c-894389d0d3fsor1259461241.5.2025.08.29.09.36.41
+        for <23307057@utfv.edu.mx>
+        (Google Transport Security);
+        Fri, 29 Aug 2025 09:36:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 23307066@utfv.edu.mx designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@utfv-edu-mx.20230601.gappssmtp.com header.s=20230601 header.b=oHHanYrP;
+       spf=pass (google.com: domain of 23307066@utfv.edu.mx designates 209.85.220.41 as permitted sender) smtp.mailfrom=23307066@utfv.edu.mx;
+       dara=pass header.i=@utfv.edu.mx
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=utfv-edu-mx.20230601.gappssmtp.com; s=20230601; t=1756485401; x=1757090201; darn=utfv.edu.mx;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5xKZItOlW4HQ01yYAhbl6mexGolubKJpURXndXIbYj8=;
+        b=oHHanYrPA7jbrFJ5SN5xtAap0ZoBRBCA1rPctxO1LH5sp85QcG74+ckbhmO+F9FvjH
+         BMGZV3JOJciVVIOlyZzttegZLc+8s2wxQa7YMI92IlItGndm4Db5m4XCttRn0QgG1VIc
+         grVYaGoOgKrRNnNqIaIr5M/sbWuG/BP7RV2QYi+bRnWQx0njmzuvjdaiGihNtf/D8Sik
+         Ow+7uuB1R/vkNepV2MlQ1FieIXI9c7g4SSTA6LCKnxJj2rlv4zKfzBV7vq9c7yAH1R9P
+         S+ULAlHK/y8zZF++cndID63H/V+nuQHHy3ek1afVdh5/6XThAq0k3mppr102D2xqkc2Y
+         mLUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756485401; x=1757090201;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5xKZItOlW4HQ01yYAhbl6mexGolubKJpURXndXIbYj8=;
+        b=qOvJQ+8ZtcB4+UVEqBw12U8N46s8ktOJTDnOG5RGKyNM4j6l+bGZ3v+K2XH/a33iEB
+         qWHEftdiQnxUZqojh8goQnVzJFIsmkvHbX8UsKIe0ODksU3vCSEzGs7cJ4JVjS8Vrsrs
+         RLirAd3SkfaeLgNuMpseaxyASx7rzmEfAD0X+/lslh82vmPi99dmqWCiLpJIaDgJXvzf
+         sTj2UKaAOUl0SXLNFD6A7xP+8Vnt5K6UBgsT1/1iQ9nMCaFAVxVvjtKS4VAbc4eXlhNt
+         uWs1oLnQQl2kod0xwezwvPFgNFqR5JkPuaaxsoa76lTp6UM9ApB3/WGymy7GgfJ3dfwW
+         cn6A==
+X-Gm-Message-State: AOJu0YyvnufL4FCkQuerRmpOjuIuK6FIIXM8ljuJGlHOQlyt0Eu9qDok
+	a4QyutGl/K0s0ClPCF43ZPQwk6njKJC5jDBwoHA+nN+VUowcfyhw7Em23xBW47gC/MO3NAxDLmj
+	b9IWAlikDPTNVkKzeHOMlLn65OM4JG2ke/b2HnSQ2yzProfT/r9Q4lP9Qww==
+X-Gm-Gg: ASbGnctMtfoRxsrnhb+/juDlfHevurGCCPnVhqU7elKBnzdgjRSsZm1ggW9+Ku4CO3S
+	ESa99osA3Lb+Fkvut7Zde68uSapUWG+JWCO/+uZ1sk2fKvkA7GuOme0SC3BgLZ3yDw2veYnxkhA
+	nVhRIUxzf3D8ToLKde4VahYY8IDWOWKIOCRzCpvKH4+j4xXrbFG5w5BqOEPKr7McL7u10mIHe4R
+	B7DP0+SXhMAYijgw3hDrG25Kw==
+X-Google-Smtp-Source: AGHT+IFT+uJQiE7qSO/2c4pVbxlWpPPY6ae06oIvljku1WHs6OWUIVu5zbcESZxQAHEkA6QRoXBNvz0req0Mlh3EGwU=
+X-Received: by 2002:a05:6102:5986:b0:523:759e:b0bf with SMTP id
+ ada2fe7eead31-523759ec354mr6542114137.20.1756485400669; Fri, 29 Aug 2025
+ 09:36:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <CALpz0aM7jsKdEzwFRPAra5_JOvh8CGf8+HDzsNFjCT0FrOOYrw@mail.gmail.com>
+In-Reply-To: <CALpz0aM7jsKdEzwFRPAra5_JOvh8CGf8+HDzsNFjCT0FrOOYrw@mail.gmail.com>
+From: Leonel Camacho Hernandez <23307066@utfv.edu.mx>
+Date: Fri, 29 Aug 2025 10:36:29 -0600
+X-Gm-Features: Ac12FXyQJL0EMnqXS95jzalUAgMO8BfjJlGAin7o9YZRIHDIzupjbu1SMsXbeiE
+Message-ID: <CAOvhgT0hMs6agtNpQ_Vpb_YZBHeg-4qnXFP_9zKMjkjqgm84qA@mail.gmail.com>
+Subject: Fwd: paginucha
+To: 23307057@utfv.edu.mx
+Content-Type: multipart/alternative; boundary="0000000000005c4246063d83a090"
+
+--0000000000005c4246063d83a090
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+PARA
+TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT=
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT=
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT....=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+....
+
+---------- Forwarded message ---------
+De: Pedro Leonel Fonseca Atanasio <23307058@utfv.edu.mx>
+Date: mi=C3=A9, 27 ago 2025 a la(s) 11:29=E2=80=AFp.m.
+Subject: paginucha
+To: <23307066@utfv.edu.mx>
+
+
+ 001.jpg
+<https://drive.google.com/file/d/1lBa521p-zx0YNpmFRbSPz7-0LyT-jTXc/view?usp=
+=3Ddrive_web>
+ 002.jpg
+<https://drive.google.com/file/d/1zxxyKOIUwg3izOIhPuv8gpMp05hnuPzU/view?usp=
+=3Ddrive_web>
+ 003.jpg
+<https://drive.google.com/file/d/1dYbAdbtj6O3jF9nwyh7vr841CYe44OiQ/view?usp=
+=3Ddrive_web>
+ 004.jpg
+<https://drive.google.com/file/d/1tntQMjH1UJ21rFvj438lTl4iYKcltYMz/view?usp=
+=3Ddrive_web>
+ 005.jpg
+<https://drive.google.com/file/d/1tloAcC52Kv3L5c19xDe6LAQWfAa7-lOl/view?usp=
+=3Ddrive_web>
+ 006.jpg
+<https://drive.google.com/file/d/1tRHeKe3HIhmlsjrtfiex7yMflwuEXU3j/view?usp=
+=3Ddrive_web>
+ alumnos.png
+<https://drive.google.com/file/d/1UBwQOdtCxTyHvTG-liWhCVVlahB3dVAB/view?usp=
+=3Ddrive_web>
+ atras.jpg
+<https://drive.google.com/file/d/1MsiIDh8ICLxfGUbF82uRjUGnV7mY5Zhf/view?usp=
+=3Ddrive_web>
+ aula_portada.png
+<https://drive.google.com/file/d/1j5x0BnrBDcoRM0VVOAncdSeOfLG02K07/view?usp=
+=3Ddrive_web>
+ carpetas.png
+<https://drive.google.com/file/d/1zuWD1VNerUkrVURD6Dn489YZrY1ZeSf8/view?usp=
+=3Ddrive_web>
+ CE.png
+<https://drive.google.com/file/d/1MyKWgwboSrvVNk95exqAR2bpaavuEcfS/view?usp=
+=3Ddrive_web>
+ CEpro.png
+<https://drive.google.com/file/d/1OZ0PqRHH72DpG3H1aJnyn_SvYlvE_DU_/view?usp=
+=3Ddrive_web>
+ christmas-background-1204029_1920.jpg
+<https://drive.google.com/file/d/1qFQMc8-0DV-Z1VQam2SnPhZzvEvTqRJI/view?usp=
+=3Ddrive_web>
+ conocenos.html
+<https://drive.google.com/file/d/1ya24RZf_BoT132Il4F2kjpdwJuplLmAw/view?usp=
+=3Ddrive_web>
+ contEs.html
+<https://drive.google.com/file/d/1nzsA_Wn8naYLCi2HU17SbvWcbDZ_1mcJ/view?usp=
+=3Ddrive_web>
+ escuela.jpg
+<https://drive.google.com/file/d/1icJJHvnPo-cn7Em9qnnn_daBCRfb30bt/view?usp=
+=3Ddrive_web>
+ horario.png
+<https://drive.google.com/file/d/1WvBZk8c---QwvtFHqH9Yv5Y3rJ53hh2j/view?usp=
+=3Ddrive_web>
+ igualdad.png
+<https://drive.google.com/file/d/16Cgh7Tqqb8eji0EWd28eYNyJVjQrYIj4/view?usp=
+=3Ddrive_web>
+ index.html
+<https://drive.google.com/file/d/12V6rUzktY8K2pIQVviIBos_WP4o9jXjk/view?usp=
+=3Ddrive_web>
+ logo_enm_4k.png
+<https://drive.google.com/file/d/13dJW1C_ujBr86DXRhJO8f7uL50G2OE8p/view?usp=
+=3Ddrive_web>
+ Manos.png
+<https://drive.google.com/file/d/18w8IgNVD2HYedoja_RblndGVL3TLAxZN/view?usp=
+=3Ddrive_web>
+ manosalt.png
+<https://drive.google.com/file/d/1bIng0zoW2cm-46ewLS7WEnXt_JO0FsLE/view?usp=
+=3Ddrive_web>
+ manual.png
+<https://drive.google.com/file/d/1r5c45NKdp6WZ1ZzBpNP_Xw93kl8uxhEx/view?usp=
+=3Ddrive_web>
+ mause(3).mp4
+<https://drive.google.com/file/d/1yxb9FNWMXSDcaMtct9zmK1zrvAYBkOaf/view?usp=
+=3Ddrive_web>
+ planesEs.html
+<https://drive.google.com/file/d/1FW3lNY-NfDh58A7G1O6q_SpcoAXoXdTm/view?usp=
+=3Ddrive_web>
+ planoeneeem.jpg
+<https://drive.google.com/file/d/1aGjtijGPPWmOSph9E6TqYvFbDUVfjjji/view?usp=
+=3Ddrive_web>
+ port.jpg
+<https://drive.google.com/file/d/1ixCd1cYLGWYG5PefM_tYAiDOrutGjtyL/view?usp=
+=3Ddrive_web>
+ profesores.png
+<https://drive.google.com/file/d/1MdZzvH7gTYNWiYq-8tOvKfzbiaqGh4z5/view?usp=
+=3Ddrive_web>
+ psicologia.html
+<https://drive.google.com/file/d/1JsPsjKMt90YPDspqeiORuAQDlgfxvaaa/view?usp=
+=3Ddrive_web>
+ Santander-Logo-650x366.png
+<https://drive.google.com/file/d/1Ph92t_BSHr3ylriquXUcm022GJTIn7jx/view?usp=
+=3Ddrive_web>
+ teatro (1).jpeg
+<https://drive.google.com/file/d/1Q9lZn4MYwfDlTLDs-UKSvtFwp2GDbWDS/view?usp=
+=3Ddrive_web>
+ titulacion.html
+<https://drive.google.com/file/d/1eZpJgpMeqHmc3HPshoPdLdjEKVQHchHe/view?usp=
+=3Ddrive_web>
+ tutorial.png
+<https://drive.google.com/file/d/1DEq4JQvckNUwkvxaHbYMi0WTHgOos_Pc/view?usp=
+=3Ddrive_web>
+ WhatsApp Image 2025-06-04 at 7.32.43 AM-Photoroom.png
+<https://drive.google.com/file/d/15vQvc3Vs1f74oSkUr1NQvcSQqX42JQkE/view?usp=
+=3Ddrive_web>
+ WhatsApp Image 2025-06-05 at 2.04.21 PM.jpeg
+<https://drive.google.com/file/d/1VY_lTeK8RN2Y_2hVwQcN5nPEFQ9bx9E7/view?usp=
+=3Ddrive_web>
+
+--0000000000005c4246063d83a090
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">PARA TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP=
+PUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU=
+UUUUUUUUUUUUUUUUUUUUUUUUUUUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT=
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT=
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT=
+TTTTTTTTTTTTTTTTTT.........................................................=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+...........................................................................=
+..........................<br><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">---------- Forwarded message =
+---------<br>De: <strong class=3D"gmail_sendername" dir=3D"auto">Pedro Leon=
+el Fonseca Atanasio</strong> <span dir=3D"auto">&lt;<a href=3D"mailto:23307=
+058@utfv.edu.mx">23307058@utfv.edu.mx</a>&gt;</span><br>Date: mi=C3=A9, 27 =
+ago 2025 a la(s) 11:29=E2=80=AFp.m.<br>Subject: paginucha<br>To:  &lt;<a hr=
+ef=3D"mailto:23307066@utfv.edu.mx">23307066@utfv.edu.mx</a>&gt;<br></div><b=
+r><br><div dir=3D"ltr"><div dir=3D"ltr"></div><div class=3D"gmail_chip gmai=
+l_drive_chip" style=3D"width:386px;height:20px;max-height:20px;background-c=
+olor:rgb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:norm=
+al;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-=
+adjust:none;font-kerning:auto;font-feature-settings:normal;font-weight:400;=
+font-stretch:normal;font-size:14px;line-height:20px;font-family:&quot;Googl=
+e Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https=
+://drive.google.com/file/d/1lBa521p-zx0YNpmFRbSPz7-0LyT-jTXc/view?usp=3Ddri=
+ve_web" style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;o=
+verflow:hidden;text-overflow:ellipsis;text-decoration-line:none;border:none=
+" aria-label=3D"001.jpg" target=3D"_blank"><img style=3D"vertical-align:tex=
+t-bottom;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https:=
+//ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span=
+ dir=3D"ltr" style=3D"vertical-align:bottom">001.jpg</span></a></div><div c=
+lass=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-h=
+eight:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alter=
+nates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:=
+normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:20px;=
+font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221=
+,221)"><a href=3D"https://drive.google.com/file/d/1zxxyKOIUwg3izOIhPuv8gpMp=
+05hnuPzU/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-=
+block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoratio=
+n-line:none;border:none" aria-label=3D"002.jpg" target=3D"_blank"><img styl=
+e=3D"vertical-align:text-bottom;border:none;padding-right:10px;height:20px"=
+ alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generi=
+c_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">002.jpg=
+</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:=
+386px;height:20px;max-height:20px;background-color:rgb(245,245,245);margin:=
+6px 0px;padding:10px;font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto=
+;font-feature-settings:normal;font-weight:400;font-stretch:normal;font-size=
+:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;borde=
+r:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/d/1d=
+YbAdbtj6O3jF9nwyh7vr841CYe44OiQ/view?usp=3Ddrive_web" style=3D"color:rgb(32=
+,33,36);display:inline-block;max-width:356px;overflow:hidden;text-overflow:=
+ellipsis;text-decoration-line:none;border:none" aria-label=3D"003.jpg" targ=
+et=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;padding-=
+right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclis=
+t/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertica=
+l-align:bottom">003.jpg</span></a></div><div class=3D"gmail_chip gmail_driv=
+e_chip" style=3D"width:386px;height:20px;max-height:20px;background-color:r=
+gb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-weight:400;font-s=
+tretch:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sans=
+&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://dri=
+ve.google.com/file/d/1tntQMjH1UJ21rFvj438lTl4iYKcltYMz/view?usp=3Ddrive_web=
+" style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overflo=
+w:hidden;text-overflow:ellipsis;text-decoration-line:none;border:none" aria=
+-label=3D"004.jpg" target=3D"_blank"><img style=3D"vertical-align:text-bott=
+om;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.=
+gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=
+=3D"ltr" style=3D"vertical-align:bottom">004.jpg</span></a></div><div class=
+=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-heigh=
+t:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;font-variant-alternate=
+s:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:norm=
+al;font-weight:400;font-stretch:normal;font-size:14px;line-height:20px;font=
+-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221,221=
+)"><a href=3D"https://drive.google.com/file/d/1tloAcC52Kv3L5c19xDe6LAQWfAa7=
+-lOl/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-bloc=
+k;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoration-li=
+ne:none;border:none" aria-label=3D"005.jpg" target=3D"_blank"><img style=3D=
+"vertical-align:text-bottom;border:none;padding-right:10px;height:20px" alt=
+=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_li=
+st.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">005.jpg</sp=
+an></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386p=
+x;height:20px;max-height:20px;background-color:rgb(245,245,245);margin:6px =
+0px;padding:10px;font-variant-numeric:normal;font-variant-east-asian:normal=
+;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;fon=
+t-feature-settings:normal;font-weight:400;font-stretch:normal;font-size:14p=
+x;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1p=
+x solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/d/1tRHeK=
+e3HIhmlsjrtfiex7yMflwuEXU3j/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,=
+36);display:inline-block;max-width:356px;overflow:hidden;text-overflow:elli=
+psis;text-decoration-line:none;border:none" aria-label=3D"006.jpg" target=
+=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;padding-ri=
+ght:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/=
+images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-=
+align:bottom">006.jpg</span></a></div><div class=3D"gmail_chip gmail_drive_=
+chip" style=3D"width:386px;height:20px;max-height:20px;background-color:rgb=
+(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-weight:400;font-str=
+etch:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sans&q=
+uot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://drive=
+.google.com/file/d/1UBwQOdtCxTyHvTG-liWhCVVlahB3dVAB/view?usp=3Ddrive_web" =
+style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overflow:=
+hidden;text-overflow:ellipsis;text-decoration-line:none;border:none" aria-l=
+abel=3D"alumnos.png" target=3D"_blank"><img style=3D"vertical-align:text-bo=
+ttom;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ss=
+l.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=
+=3D"ltr" style=3D"vertical-align:bottom">alumnos.png</span></a></div><div c=
+lass=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-h=
+eight:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alter=
+nates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:=
+normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:20px;=
+font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221=
+,221)"><a href=3D"https://drive.google.com/file/d/1MsiIDh8ICLxfGUbF82uRjUGn=
+V7mY5Zhf/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-=
+block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoratio=
+n-line:none;border:none" aria-label=3D"atras.jpg" target=3D"_blank"><img st=
+yle=3D"vertical-align:text-bottom;border:none;padding-right:10px;height:20p=
+x" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_gene=
+ric_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">atras=
+.jpg</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"wi=
+dth:386px;height:20px;max-height:20px;background-color:rgb(245,245,245);mar=
+gin:6px 0px;padding:10px;font-variant-numeric:normal;font-variant-east-asia=
+n:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:=
+auto;font-feature-settings:normal;font-weight:400;font-stretch:normal;font-=
+size:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;b=
+order:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/=
+d/1j5x0BnrBDcoRM0VVOAncdSeOfLG02K07/view?usp=3Ddrive_web" style=3D"color:rg=
+b(32,33,36);display:inline-block;max-width:356px;overflow:hidden;text-overf=
+low:ellipsis;text-decoration-line:none;border:none" aria-label=3D"aula_port=
+ada.png" target=3D"_blank"><img style=3D"vertical-align:text-bottom;border:=
+none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.co=
+m/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" sty=
+le=3D"vertical-align:bottom">aula_portada.png</span></a></div><div class=3D=
+"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-height:2=
+0px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:n=
+ormal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;=
+font-weight:400;font-stretch:normal;font-size:14px;line-height:20px;font-fa=
+mily:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)">=
+<a href=3D"https://drive.google.com/file/d/1zuWD1VNerUkrVURD6Dn489YZrY1ZeSf=
+8/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-block;m=
+ax-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoration-line:=
+none;border:none" aria-label=3D"carpetas.png" target=3D"_blank"><img style=
+=3D"vertical-align:text-bottom;border:none;padding-right:10px;height:20px" =
+alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic=
+_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">carpetas=
+.png</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"wi=
+dth:386px;height:20px;max-height:20px;background-color:rgb(245,245,245);mar=
+gin:6px 0px;padding:10px;font-variant-numeric:normal;font-variant-east-asia=
+n:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:=
+auto;font-feature-settings:normal;font-weight:400;font-stretch:normal;font-=
+size:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;b=
+order:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/=
+d/1MyKWgwboSrvVNk95exqAR2bpaavuEcfS/view?usp=3Ddrive_web" style=3D"color:rg=
+b(32,33,36);display:inline-block;max-width:356px;overflow:hidden;text-overf=
+low:ellipsis;text-decoration-line:none;border:none" aria-label=3D"CE.png" t=
+arget=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;paddi=
+ng-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doc=
+list/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vert=
+ical-align:bottom">CE.png</span></a></div><div class=3D"gmail_chip gmail_dr=
+ive_chip" style=3D"width:386px;height:20px;max-height:20px;background-color=
+:rgb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;f=
+ont-variant-east-asian:normal;font-variant-alternates:normal;font-size-adju=
+st:none;font-kerning:auto;font-feature-settings:normal;font-weight:400;font=
+-stretch:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sa=
+ns&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://d=
+rive.google.com/file/d/1OZ0PqRHH72DpG3H1aJnyn_SvYlvE_DU_/view?usp=3Ddrive_w=
+eb" style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overf=
+low:hidden;text-overflow:ellipsis;text-decoration-line:none;border:none" ar=
+ia-label=3D"CEpro.png" target=3D"_blank"><img style=3D"vertical-align:text-=
+bottom;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://=
+ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span d=
+ir=3D"ltr" style=3D"vertical-align:bottom">CEpro.png</span></a></div><div c=
+lass=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-h=
+eight:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;fo=
+nt-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alter=
+nates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:=
+normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:20px;=
+font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221=
+,221)"><a href=3D"https://drive.google.com/file/d/1qFQMc8-0DV-Z1VQam2SnPhZz=
+vEvTqRJI/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-=
+block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoratio=
+n-line:none;border:none" aria-label=3D"christmas-background-1204029_1920.jp=
+g" target=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;p=
+adding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs=
+/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"=
+vertical-align:bottom">christmas-background-1204029_1920.jpg</span></a></di=
+v><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20=
+px;max-height:20px;background-color:rgb(245,245,245);margin:6px 0px;padding=
+:10px;font-variant-numeric:normal;font-variant-east-asian:normal;font-varia=
+nt-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-s=
+ettings:normal;font-weight:400;font-stretch:normal;font-size:14px;line-heig=
+ht:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb=
+(221,221,221)"><a href=3D"https://drive.google.com/file/d/1ya24RZf_BoT132Il=
+4F2kjpdwJuplLmAw/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display=
+:inline-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-d=
+ecoration-line:none;border:none" aria-label=3D"conocenos.html" target=3D"_b=
+lank"><img style=3D"vertical-align:text-bottom;border:none;padding-right:10=
+px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images=
+/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:=
+bottom">conocenos.html</span></a></div><div class=3D"gmail_chip gmail_drive=
+_chip" style=3D"width:386px;height:20px;max-height:20px;background-color:rg=
+b(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:=
+none;font-kerning:auto;font-feature-settings:normal;font-weight:400;font-st=
+retch:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sans&=
+quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://driv=
+e.google.com/file/d/1nzsA_Wn8naYLCi2HU17SbvWcbDZ_1mcJ/view?usp=3Ddrive_web"=
+ style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overflow=
+:hidden;text-overflow:ellipsis;text-decoration-line:none;border:none" aria-=
+label=3D"contEs.html" target=3D"_blank"><img style=3D"vertical-align:text-b=
+ottom;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://s=
+sl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span di=
+r=3D"ltr" style=3D"vertical-align:bottom">contEs.html</span></a></div><div =
+class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-=
+height:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
+rnates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings=
+:normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:20px=
+;font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,22=
+1,221)"><a href=3D"https://drive.google.com/file/d/1icJJHvnPo-cn7Em9qnnn_da=
+BCRfb30bt/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline=
+-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-decorati=
+on-line:none;border:none" aria-label=3D"escuela.jpg" target=3D"_blank"><img=
+ style=3D"vertical-align:text-bottom;border:none;padding-right:10px;height:=
+20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_g=
+eneric_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">es=
+cuela.jpg</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=
+=3D"width:386px;height:20px;max-height:20px;background-color:rgb(245,245,24=
+5);margin:6px 0px;padding:10px;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-ke=
+rning:auto;font-feature-settings:normal;font-weight:400;font-stretch:normal=
+;font-size:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-s=
+erif;border:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com=
+/file/d/1WvBZk8c---QwvtFHqH9Yv5Y3rJ53hh2j/view?usp=3Ddrive_web" style=3D"co=
+lor:rgb(32,33,36);display:inline-block;max-width:356px;overflow:hidden;text=
+-overflow:ellipsis;text-decoration-line:none;border:none" aria-label=3D"hor=
+ario.png" target=3D"_blank"><img style=3D"vertical-align:text-bottom;border=
+:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.c=
+om/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" st=
+yle=3D"vertical-align:bottom">horario.png</span></a></div><div class=3D"gma=
+il_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-height:20px;=
+background-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-variant-alternates:norma=
+l;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font=
+-weight:400;font-stretch:normal;font-size:14px;line-height:20px;font-family=
+:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a h=
+ref=3D"https://drive.google.com/file/d/16Cgh7Tqqb8eji0EWd28eYNyJVjQrYIj4/vi=
+ew?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-block;max-w=
+idth:356px;overflow:hidden;text-overflow:ellipsis;text-decoration-line:none=
+;border:none" aria-label=3D"igualdad.png" target=3D"_blank"><img style=3D"v=
+ertical-align:text-bottom;border:none;padding-right:10px;height:20px" alt=
+=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_li=
+st.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">igualdad.pn=
+g</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"width=
+:386px;height:20px;max-height:20px;background-color:rgb(245,245,245);margin=
+:6px 0px;padding:10px;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:aut=
+o;font-feature-settings:normal;font-weight:400;font-stretch:normal;font-siz=
+e:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;bord=
+er:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/d/1=
+2V6rUzktY8K2pIQVviIBos_WP4o9jXjk/view?usp=3Ddrive_web" style=3D"color:rgb(3=
+2,33,36);display:inline-block;max-width:356px;overflow:hidden;text-overflow=
+:ellipsis;text-decoration-line:none;border:none" aria-label=3D"index.html" =
+target=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;padd=
+ing-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/do=
+clist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"ver=
+tical-align:bottom">index.html</span></a></div><div class=3D"gmail_chip gma=
+il_drive_chip" style=3D"width:386px;height:20px;max-height:20px;background-=
+color:rgb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-variant-alternates:normal;font-size=
+-adjust:none;font-kerning:auto;font-feature-settings:normal;font-weight:400=
+;font-stretch:normal;font-size:14px;line-height:20px;font-family:&quot;Goog=
+le Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"http=
+s://drive.google.com/file/d/13dJW1C_ujBr86DXRhJO8f7uL50G2OE8p/view?usp=3Ddr=
+ive_web" style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;=
+overflow:hidden;text-overflow:ellipsis;text-decoration-line:none;border:non=
+e" aria-label=3D"logo_enm_4k.png" target=3D"_blank"><img style=3D"vertical-=
+align:text-bottom;border:none;padding-right:10px;height:20px" alt=3D"" src=
+=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=
+=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">logo_enm_4k.png</sp=
+an></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386p=
+x;height:20px;max-height:20px;background-color:rgb(245,245,245);margin:6px =
+0px;padding:10px;font-variant-numeric:normal;font-variant-east-asian:normal=
+;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;fon=
+t-feature-settings:normal;font-weight:400;font-stretch:normal;font-size:14p=
+x;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1p=
+x solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/d/18w8Ig=
+NVD2HYedoja_RblndGVL3TLAxZN/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,=
+36);display:inline-block;max-width:356px;overflow:hidden;text-overflow:elli=
+psis;text-decoration-line:none;border:none" aria-label=3D"Manos.png" target=
+=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;padding-ri=
+ght:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/=
+images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-=
+align:bottom">Manos.png</span></a></div><div class=3D"gmail_chip gmail_driv=
+e_chip" style=3D"width:386px;height:20px;max-height:20px;background-color:r=
+gb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-weight:400;font-s=
+tretch:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sans=
+&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://dri=
+ve.google.com/file/d/1bIng0zoW2cm-46ewLS7WEnXt_JO0FsLE/view?usp=3Ddrive_web=
+" style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overflo=
+w:hidden;text-overflow:ellipsis;text-decoration-line:none;border:none" aria=
+-label=3D"manosalt.png" target=3D"_blank"><img style=3D"vertical-align:text=
+-bottom;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https:/=
+/ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span =
+dir=3D"ltr" style=3D"vertical-align:bottom">manosalt.png</span></a></div><d=
+iv class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;m=
+ax-height:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10p=
+x;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-setti=
+ngs:normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:2=
+0px;font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221=
+,221,221)"><a href=3D"https://drive.google.com/file/d/1r5c45NKdp6WZ1ZzBpNP_=
+Xw93kl8uxhEx/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inl=
+ine-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-decor=
+ation-line:none;border:none" aria-label=3D"manual.png" target=3D"_blank"><i=
+mg style=3D"vertical-align:text-bottom;border:none;padding-right:10px;heigh=
+t:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10=
+_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">=
+manual.png</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=
+=3D"width:386px;height:20px;max-height:20px;background-color:rgb(245,245,24=
+5);margin:6px 0px;padding:10px;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-ke=
+rning:auto;font-feature-settings:normal;font-weight:400;font-stretch:normal=
+;font-size:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-s=
+erif;border:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com=
+/file/d/1yxb9FNWMXSDcaMtct9zmK1zrvAYBkOaf/view?usp=3Ddrive_web" style=3D"co=
+lor:rgb(32,33,36);display:inline-block;max-width:356px;overflow:hidden;text=
+-overflow:ellipsis;text-decoration-line:none;border:none" aria-label=3D"mau=
+se(3).mp4" target=3D"_blank"><img style=3D"vertical-align:text-bottom;borde=
+r:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.=
+com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" s=
+tyle=3D"vertical-align:bottom">mause(3).mp4</span></a></div><div class=3D"g=
+mail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-height:20p=
+x;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:nor=
+mal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;fo=
+nt-weight:400;font-stretch:normal;font-size:14px;line-height:20px;font-fami=
+ly:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a=
+ href=3D"https://drive.google.com/file/d/1FW3lNY-NfDh58A7G1O6q_SpcoAXoXdTm/=
+view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-block;max=
+-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoration-line:no=
+ne;border:none" aria-label=3D"planesEs.html" target=3D"_blank"><img style=
+=3D"vertical-align:text-bottom;border:none;padding-right:10px;height:20px" =
+alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic=
+_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">planesEs=
+.html</span></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"w=
+idth:386px;height:20px;max-height:20px;background-color:rgb(245,245,245);ma=
+rgin:6px 0px;padding:10px;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning=
+:auto;font-feature-settings:normal;font-weight:400;font-stretch:normal;font=
+-size:14px;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;=
+border:1px solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file=
+/d/1aGjtijGPPWmOSph9E6TqYvFbDUVfjjji/view?usp=3Ddrive_web" style=3D"color:r=
+gb(32,33,36);display:inline-block;max-width:356px;overflow:hidden;text-over=
+flow:ellipsis;text-decoration-line:none;border:none" aria-label=3D"planoene=
+eem.jpg" target=3D"_blank"><img style=3D"vertical-align:text-bottom;border:=
+none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.co=
+m/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" sty=
+le=3D"vertical-align:bottom">planoeneeem.jpg</span></a></div><div class=3D"=
+gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;max-height:20=
+px;background-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:no=
+rmal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;f=
+ont-weight:400;font-stretch:normal;font-size:14px;line-height:20px;font-fam=
+ily:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><=
+a href=3D"https://drive.google.com/file/d/1ixCd1cYLGWYG5PefM_tYAiDOrutGjtyL=
+/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:inline-block;ma=
+x-width:356px;overflow:hidden;text-overflow:ellipsis;text-decoration-line:n=
+one;border:none" aria-label=3D"port.jpg" target=3D"_blank"><img style=3D"ve=
+rtical-align:text-bottom;border:none;padding-right:10px;height:20px" alt=3D=
+"" src=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.=
+png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">port.jpg</span=
+></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;=
+height:20px;max-height:20px;background-color:rgb(245,245,245);margin:6px 0p=
+x;padding:10px;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-=
+feature-settings:normal;font-weight:400;font-stretch:normal;font-size:14px;=
+line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1px =
+solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/d/1MdZzvH7=
+gTYNWiYq-8tOvKfzbiaqGh4z5/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36=
+);display:inline-block;max-width:356px;overflow:hidden;text-overflow:ellips=
+is;text-decoration-line:none;border:none" aria-label=3D"profesores.png" tar=
+get=3D"_blank"><img style=3D"vertical-align:text-bottom;border:none;padding=
+-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/docli=
+st/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertic=
+al-align:bottom">profesores.png</span></a></div><div class=3D"gmail_chip gm=
+ail_drive_chip" style=3D"width:386px;height:20px;max-height:20px;background=
+-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-variant-alternates:normal;font-siz=
+e-adjust:none;font-kerning:auto;font-feature-settings:normal;font-weight:40=
+0;font-stretch:normal;font-size:14px;line-height:20px;font-family:&quot;Goo=
+gle Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"htt=
+ps://drive.google.com/file/d/1JsPsjKMt90YPDspqeiORuAQDlgfxvaaa/view?usp=3Dd=
+rive_web" style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px=
+;overflow:hidden;text-overflow:ellipsis;text-decoration-line:none;border:no=
+ne" aria-label=3D"psicologia.html" target=3D"_blank"><img style=3D"vertical=
+-align:text-bottom;border:none;padding-right:10px;height:20px" alt=3D"" src=
+=3D"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=
+=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bottom">psicologia.html</sp=
+an></a></div><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386p=
+x;height:20px;max-height:20px;background-color:rgb(245,245,245);margin:6px =
+0px;padding:10px;font-variant-numeric:normal;font-variant-east-asian:normal=
+;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;fon=
+t-feature-settings:normal;font-weight:400;font-stretch:normal;font-size:14p=
+x;line-height:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1p=
+x solid rgb(221,221,221)"><a href=3D"https://drive.google.com/file/d/1Ph92t=
+_BSHr3ylriquXUcm022GJTIn7jx/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,=
+36);display:inline-block;max-width:356px;overflow:hidden;text-overflow:elli=
+psis;text-decoration-line:none;border:none" aria-label=3D"Santander-Logo-65=
+0x366.png" target=3D"_blank"><img style=3D"vertical-align:text-bottom;borde=
+r:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gstatic.=
+com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"ltr" s=
+tyle=3D"vertical-align:bottom">Santander-Logo-650x366.png</span></a></div><=
+div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px;=
+max-height:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:10=
+px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-=
+alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-sett=
+ings:normal;font-weight:400;font-stretch:normal;font-size:14px;line-height:=
+20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(22=
+1,221,221)"><a href=3D"https://drive.google.com/file/d/1Q9lZn4MYwfDlTLDs-UK=
+SvtFwp2GDbWDS/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:in=
+line-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-deco=
+ration-line:none;border:none" aria-label=3D"teatro (1).jpeg" target=3D"_bla=
+nk"><img style=3D"vertical-align:text-bottom;border:none;padding-right:10px=
+;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/i=
+con_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bo=
+ttom">teatro (1).jpeg</span></a></div><div class=3D"gmail_chip gmail_drive_=
+chip" style=3D"width:386px;height:20px;max-height:20px;background-color:rgb=
+(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-weight:400;font-str=
+etch:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sans&q=
+uot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://drive=
+.google.com/file/d/1eZpJgpMeqHmc3HPshoPdLdjEKVQHchHe/view?usp=3Ddrive_web" =
+style=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overflow:=
+hidden;text-overflow:ellipsis;text-decoration-line:none;border:none" aria-l=
+abel=3D"titulacion.html" target=3D"_blank"><img style=3D"vertical-align:tex=
+t-bottom;border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https:=
+//ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span=
+ dir=3D"ltr" style=3D"vertical-align:bottom">titulacion.html</span></a></di=
+v><div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20=
+px;max-height:20px;background-color:rgb(245,245,245);margin:6px 0px;padding=
+:10px;font-variant-numeric:normal;font-variant-east-asian:normal;font-varia=
+nt-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-s=
+ettings:normal;font-weight:400;font-stretch:normal;font-size:14px;line-heig=
+ht:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb=
+(221,221,221)"><a href=3D"https://drive.google.com/file/d/1DEq4JQvckNUwkvxa=
+HbYMi0WTHgOos_Pc/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display=
+:inline-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-d=
+ecoration-line:none;border:none" aria-label=3D"tutorial.png" target=3D"_bla=
+nk"><img style=3D"vertical-align:text-bottom;border:none;padding-right:10px=
+;height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/i=
+con_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bo=
+ttom">tutorial.png</span></a></div><div class=3D"gmail_chip gmail_drive_chi=
+p" style=3D"width:386px;height:20px;max-height:20px;background-color:rgb(24=
+5,245,245);margin:6px 0px;padding:10px;font-variant-numeric:normal;font-var=
+iant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none=
+;font-kerning:auto;font-feature-settings:normal;font-weight:400;font-stretc=
+h:normal;font-size:14px;line-height:20px;font-family:&quot;Google Sans&quot=
+;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"https://drive.go=
+ogle.com/file/d/15vQvc3Vs1f74oSkUr1NQvcSQqX42JQkE/view?usp=3Ddrive_web" sty=
+le=3D"color:rgb(32,33,36);display:inline-block;max-width:356px;overflow:hid=
+den;text-overflow:ellipsis;text-decoration-line:none;border:none" aria-labe=
+l=3D"WhatsApp Image 2025-06-04 at 7.32.43 AM-Photoroom.png" target=3D"_blan=
+k"><img style=3D"vertical-align:text-bottom;border:none;padding-right:10px;=
+height:20px" alt=3D"" src=3D"https://ssl.gstatic.com/docs/doclist/images/ic=
+on_10_generic_list.png">=C2=A0<span dir=3D"ltr" style=3D"vertical-align:bot=
+tom">WhatsApp Image 2025-06-04 at 7.32.43 AM-Photoroom.png</span></a></div>=
+<div class=3D"gmail_chip gmail_drive_chip" style=3D"width:386px;height:20px=
+;max-height:20px;background-color:rgb(245,245,245);margin:6px 0px;padding:1=
+0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant=
+-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-set=
+tings:normal;font-weight:400;font-stretch:normal;font-size:14px;line-height=
+:20px;font-family:&quot;Google Sans&quot;,sans-serif;border:1px solid rgb(2=
+21,221,221)"><a href=3D"https://drive.google.com/file/d/1VY_lTeK8RN2Y_2hVwQ=
+cN5nPEFQ9bx9E7/view?usp=3Ddrive_web" style=3D"color:rgb(32,33,36);display:i=
+nline-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;text-dec=
+oration-line:none;border:none" aria-label=3D"WhatsApp Image 2025-06-05 at 2=
+.04.21 PM.jpeg" target=3D"_blank"><img style=3D"vertical-align:text-bottom;=
+border:none;padding-right:10px;height:20px" alt=3D"" src=3D"https://ssl.gst=
+atic.com/docs/doclist/images/icon_10_generic_list.png">=C2=A0<span dir=3D"l=
+tr" style=3D"vertical-align:bottom">WhatsApp Image 2025-06-05 at 2.04.21 PM=
+.jpeg</span></a></div><div dir=3D"ltr"></div></div>
+</div></div>
+
+--0000000000005c4246063d83a090--

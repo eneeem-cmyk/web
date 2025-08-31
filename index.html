@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ENEEEM | Escuela Normal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 17px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+    }
+
+    header.scrolled {
+      background-color: #56212f;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      height: 65px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+
+    header a:hover {
+      color: #d49a2e;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      background: none;
+      border: none;
+      z-index: 1101;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1100;
+    }
+
+    .menu-overlay.show {
+      display: block;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      height: 100vh;
+      width: 260px;
+      background-color: #56212f;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      transition: right 0.3s ease;
+      z-index: 1102;
+    }
+
+    .mobile-menu.show {
+      right: 0;
+    }
+
+    .mobile-menu a {
+      color: #f4d7b4;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero {
+      height: 100vh;
+      background-image: url("christmas-background-1204029_1920.jpg");
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    .overlay-text {
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 2s ease;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .eneeem {
+      font-size: 64px;
+      font-weight: 800;
+      color: #d49a2e;
+      margin-bottom: 15px;
+    }
+
+    .subtext {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin: 8px;
+      padding: 14px 32px;
+      background-color: #977e5b;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+
+    .cta-button:hover {
+      background-color: #ad8f65;
+    }
+
+    .info-section {
+      padding: 80px 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      scroll-margin-top: 100px;
+    }
+
+    .info-section h2 {
+      font-size: 32px;
+      color: #977e5b;
+      margin-bottom: 20px;
+    }
+
+    .info-section p {
+      font-size: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: justify;
+      line-height: 1.7;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 60px 20px;
+      background-color: rgba(240, 240, 240, 0.9);
+    }
+
+    .feature {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 280px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature h3 {
+      color: #977e5b;
+      margin-bottom: 15px;
+    }
+
+    .feature p {
+      font-size: 16px;
+    }
+
+    footer {
+      background-color: #56212f;
+      color: #ffffff;
+      text-align: center;
+      padding: 10px 10px;
+      font-size: 12px;
+    }
+
+    footer p {
+      margin: 8px 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .eneeem { font-size: 42px; }
+      .subtext { font-size: 18px; }
+      .hero {
+        background-attachment: scroll;
+      }
+      .cta-button {
+        width: 90%;
+        max-width: 300px;
+      }
+      .info-section p {
+        font-size: 18px;
+        padding: 0 10px;
+      }
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+      .feature {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="WhatsApp Image 2025-06-04 at 7.32.43 AM-Photoroom.png" alt="ENEEEM Logo" class="logo" />
+    <nav class="nav-links">
+      <a href="conocenos.html">Conócenos</a>
+      <a href="contEs.html">Control Escolar</a>
+      <a href="planesEs.html">Planes de Estudio</a>
+      <a href="titulacion.html">Titulacion</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="conocenos.html" onclick="toggleMenu()">Conócenos</a>
+      <a href="contEs.html" onclick="toggleMenu()">Control Escolar</a>
+      <a href="planesEs.html" onclick="toggleMenu()">Planes de Estudio</a>
+      <a href="titulacion.html" onclick="toggleMenu()">Titulación</a>
+      
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="overlay-text">
+      <div class="eneeem">ENEEEM</div>
+      <div class="subtext">¡Bienvenidos a nuestro sitio web institucional!</div>
+      <a href="#nosotros" class="cta-button">Ver más</a>
+      <a href="psicologia.html" class="cta-button" style="background-color:#4e232e;">Ir a Unidad de Apoyo</a>
+    </div>
+  </section>
+
+  <section class="info-section" id="nosotros">
+    <h2>Escuela Normal de Educación Especial del Estado de México</h2>
+    <p>
+      Somos una institución formadora de licenciados en inclusión educativa. Dentro de esta institución encontrarás un excelente ambiente académico, también, talleres y clubes donde podrás desarrollarte integralmente, en deporte o bien, en alguna de las bellas artes como danza o coro. Tenemos servicio de tutoría y contamos con una Unidad de Apoyo Psicopedagógico, en la que menores de la comunidad aledaña con dificultades reciben atención educativa y los estudiantes de la normal participan a partir de cierto semestre.
+    </p>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <h3>Excelencia Académica</h3>
+      <p>Formamos docentes con sólidos valores y competencias pedagógicas actualizadas.</p>
+    </div>
+    <div class="feature">
+      <h3>Inclusión</h3>
+      <p>Promovemos una educación especial basada en el respeto, equidad y justicia social.</p>
+    </div>
+    <div class="feature">
+      <h3>Vinculación</h3>
+      <p>Conectamos la teoría con la práctica a través de estancias, talleres y colaboración docente.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>ENEEEM</strong>
+      <br> - Escuela Normal de Educación Especial del Estado de México</p>
+    <p>Dirección: Boulevard Ignacio Zaragoza S/N Col. Hogares de Atizapán, Atizapán de Zaragoza. Méx. C.P. 52910</p>
+    <p>Correo: eneducacionespecial@gmail.com | Tels: (55) 58204327,</p>
+    <p>&copy; 2025 Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    const header = document.querySelector("header");
+    const hamburger = document.querySelector(".hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const overlay = document.querySelector(".menu-overlay");
+
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    function toggleMenu() {
+      hamburger.classList.toggle("active");
+      mobileMenu.classList.toggle("show");
+      overlay.classList.toggle("show");
+    }
+  </script>
+
+</body>
+</html>

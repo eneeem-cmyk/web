@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes de Estudio | ENEEEM</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            overflow-x: hidden;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
+            min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Clave para la adaptabilidad */
+        }
+        
+        
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0; left: 0;
+            z-index: 1000;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        header.scrolled {
+            background-color: #56212f; /* Color del tema */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hamburger {
+            display: none; 
+            z-index: 1101; 
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 25px; height: 3px;
+            margin: 5px 0;
+            background: #fff;
+            border-radius: 3px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1099;
+        }
+
+        .menu-overlay.show { opacity: 1; visibility: visible; }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Inicia fuera de la pantalla */
+            width: 280px; height: 100%;
+            background-color: #56212f;
+            transition: right 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+            z-index: 1100;
+        }
+        .mobile-menu.show { right: 0; }
+        
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header class="py-4 px-6 md:px-10 flex justify-between items-center">
+        <a href="#inicio">
+            <img src="WhatsApp Image 2025-06-04 at 7.32.43 AM-Photoroom.png" alt="Logo ENEEEM" class="h-16 transition-transform duration-300 hover:scale-105" />
+        </a>
+        <nav class="nav-links hidden md:flex items-center gap-x-8">
+            <a href="#bienvenida" class="text-white font-medium hover:text-[#ad8f65] transition-colors duration-300">Conócenos</a>
+            <a href="#planes" class="text-white font-medium hover:text-[#ad8f65] transition-colors duration-300">Planes de Estudio</a>
+            <a href="#admision" class="text-white font-medium hover:text-[#ad8f65] transition-colors duration-300">Admisión</a>
+            <a href="index.html" class="text-white font-medium hover:text-[#ad8f65] transition-colors duration-300">Inicio</a>
+           
+        </nav>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    <nav class="mobile-menu p-8 pt-24 flex flex-col gap-y-6" id="mobileMenu">
+        <a href="#bienvenida" class="text-white text-lg font-semibold" onclick="toggleMenu()">Conócenos</a>
+        <a href="#planes" class="text-white text-lg font-semibold" onclick="toggleMenu()">Planes de Estudio</a>
+        <a href="#admision" class="text-white text-lg font-semibold" onclick="toggleMenu()">Admisión</a>
+        <a href="index.html" class="text-white text-lg font-semibold" onclick="toggleMenu()">Inicio</a>
+        
+    </nav>
+    
+    <div class="video-background">
+        <video autoplay loop muted playsinline poster="fallback-image.jpg">
+            <source src="mause(3).mp4" type="video/mp4">
+            <source src="MAUSE.webm" type="video/webm">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    </div>
+
+    <main>
+        <section id="inicio" class="relative h-screen flex flex-col justify-center items-center text-center text-white p-4 bg-black bg-opacity-50">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-shadow-lg animate-fade-in-down">
+                Licenciaturas en <span class="text-[#ad8f65]">Educación Especial</span>
+            </h1>
+            <p class="text-lg md:text-2xl mb-8 max-w-3xl leading-relaxed animate-fade-in-up">
+                Formando profesionales con vocación y excelencia para construir un futuro inclusivo. Descubre nuestros planes de estudio.
+            </p>
+            <a href="#planes" class="bg-[#977e5b] text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-[#ad8f65] transition-all duration-300 transform hover:scale-105">
+                Ver Planes de Estudio
+            </a>
+        </section>
+
+        <section id="bienvenida" class="py-20 px-6 bg-white text-gray-800">
+            <br>
+            <br>
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#56212f] mb-4">Formando el Futuro de la Educación Inclusiva</h2>
+                <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
+                    En la Escuela Normal de Educación Especial del Estado de México (ENEEEM), tenemos el compromiso de preparar docentes altamente capacitados, con un profundo sentido humano y ético, listos para enfrentar los retos de la educación especial y promover la inclusión en cada aula.
+                </p>
+            </div>
+        </section>
+
+        <section id="planes" class="py-20 px-6 bg-gray-100">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <BR>
+                    </BR>
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#56212f]">Recuerda que  </h2>
+                    <br>
+                    <br>
+                    <p class="text-lg text-gray-600 mt-2">El Plan de Estudios es el documento que rige el proceso de formación de maestros para la inclusión educativa en los servicios de educación especial de la educación básica. Describe sus orientaciones fundamentales, los elementos generales y específicos que lo conforman, de acuerdo con las tendencias de la educación superior, la población objeto de atención señalada en el artículo 41 de la LGE (2016) y con los enfoques del plan de estudios de educación básica. Su aplicación en las Escuelas Normales debe permitir que se atiendan, con oportunidad y pertinencia, las exigencias derivadas de las situaciones y problemas que presentará la actividad profesional a los futuros maestros de este servicio educativo en el corto y mediano plazo.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="Manos.png" alt="Inclusión Educativa" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-[#977e5b] mb-3">LICENCIATURA EN INCLUSIÓN EDUCATIVA PLAN 2018</h3>
+                            <p class="text-gray-700 mb-4">El diseño del Plan de Estudios se sustenta en las tendencias más recientes de la Educación Inclusiva; en las diversas perspectivas
+                                 teóricas y metodológicas de las disciplinas que son afines al objeto de enseñanza en la inclusión y de aquellas que explican el proceso educativo en la diversidad;
+                                  en los desafíos de la formación de maestros para la educación especial; en la naturaleza y desarrollo de las prácticas pedagógicas actuales y las emergentes, además de los problemas que, como resultado de los múltiples cambios que en lo social, cultural, económico, tecnológico y educativo tanto en lo internacional como en lo nacional enfrentan los profesionales de la educación, así como en los marcos normativos y pedagógicos establecidos en el Modelo Educativo para la Educación Obligatoria. </p>
+                            <a href="https://www.cevie-dgesum.com/index.php/planes-de-estudios-2018/127" class="font-semibold text-[#56212f] hover:underline">Mapa curricular &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="igualdad.png" alt="Discapacidad Intelectual" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-[#977e5b] mb-3">LICENCIATURA EN INCLUSIÓN EDUCATIVA PLAN 2022</h3>
+                            <p class="text-gray-700 mb-4">El Plan de estudio enfatiza la importancia de atender la diversidad desde el enfoque centrado en las potencialidades que tienen las personas 
+                                que enfrentan barreras para el aprendizaje y la participación, para desarrollarse integralmente y vivir una vida digna enmarcada en los derechos humanos, como lo indica 
+                                la Estrategia nacional de educación inclusiva (EN El) "La condición de exclusión social implica una privación de derechos fundamentales". El objetivo es claro: convertir 
+                                progresivamente el actual Sistema Educativo Nacional caracterizado por ser estandarizado, centralizado, poco flexible, inequitativo y fragmentado, en un sistema inclusivo,
+                                flexible y pertinente que favorezca el acceso, avance, permanencia, aprendizaje, participación y conclusión de los estudios de niñas, niños, adolescentes y jóvenes en todo
+                                el país, en su amplia diversidad, en igualdad de condiciones y oportunidades. En este marco, la Licenciatura en Inclusión Educativa es una proyecto educativo que responde
+                                a las demandas de la sociedad actual y al proyecto de nación para formar docentes que coadyuven a eliminar o disminuir las barreras para el aprendizaje y la participación
+                                a través de diversos mecanismos, estrategias y métodos de intervención docente que permitan construir una sociedad incluyente.</p>
+                            <a href="#" class="font-semibold text-[#56212f] hover:underline">Maya curricular del 2022 &rarr;</a>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="admision" class="py-20 px-6 bg-white">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <BR></BR>
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#56212f]">Proceso de Admisión</h2>
+                    <p class="text-lg text-gray-600 mt-2">Da el primer paso hacia tu futuro profesional. ¡Es muy sencillo!</p>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="flex-1 text-center p-6 bg-gray-50 rounded-lg">
+                        <div class="bg-[#977e5b] text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">1</div>
+                        <h3 class="text-xl font-semibold mb-2">Consulta la Convocatoria</h3>
+                        <p>Mantente atento a las fechas oficiales publicadas en nuestros canales de comunicación.</p>
+                    </div>
+                    <div class="flex-1 text-center p-6 bg-gray-50 rounded-lg">
+                        <div class="bg-[#977e5b] text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">2</div>
+                        <h3 class="text-xl font-semibold mb-2">Realiza tu Pre-registro</h3>
+                        <p>Completa tu solicitud en línea con todos los documentos requeridos.</p>
+                    </div>
+                    <div class="flex-1 text-center p-6 bg-gray-50 rounded-lg">
+                        <div class="bg-[#977e5b] text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">3</div>
+                        <h3 class="text-xl font-semibold mb-2">Presenta el Examen</h3>
+                        <p>Demuestra tus conocimientos y aptitudes en el examen de selección.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="testimonios" class="py-20 px-6 bg-gray-100">
+            <div class="max-w-4xl mx-auto text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold text-[#56212f] mb-8">Lo que dicen nuestros egresados</h2>
+                 <div class="bg-white p-8 rounded-xl shadow-lg relative">
+                     <p class="text-lg italic text-gray-600 mb-4">"Estudiar en la ENEEEM fue la mejor decisión. No solo adquirí conocimientos, sino que desarrollé una verdadera pasión por la enseñanza inclusiva que aplico cada día en mi trabajo."</p>
+                     <p class="font-bold text-[#977e5b] text-lg">- Ana Sofía G.</p>
+                     <p class="text-gray-500">Egresada, Generación 2022</p>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer id="contacto" class="bg-[#56212f] text-white pt-16 pb-8 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <img src="WhatsApp Image 2025-06-04 at 7.32.43 AM-Photoroom.png" alt="Logo ENEEEM Blanco" class="h-20 mx-auto md:mx-0 mb-4">
+                <p class="text-gray-300">Escuela Normal de Educación Especial del Estado de México.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Contacto</h4>
+                <p class="text-gray-300 flex items-center justify-center md:justify-start gap-2 mb-2">
+                    <ion-icon name="location-outline"></ion-icon>
+                    Blvd. Ignacio Zaragoza S/N, Atizapán Estado de México, México  52910.
+                </p>
+                <p class="text-gray-300 flex items-center justify-center md:justify-start gap-2 mb-2">
+                    <ion-icon name="mail-outline"></ion-icon>
+                   eneducacionespecial@gmail.com
+                </p>
+                <p class="text-gray-300 flex items-center justify-center md:justify-start gap-2">
+                    <ion-icon name="call-outline"></ion-icon>
+                    (55) 5820-4327
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Enlaces</h4>
+                <ul>
+                    <li><a href="conocenos.html" class="text-gray-300 hover:text-white">Conócenos</a></li>
+                    <li><a href="#planes" class="text-gray-300 hover:text-white">Planes de Estudio</a></li>
+                    <li><a href="contEs.html" class="text-gray-300 hover:text-white">Control Escolar</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-500 mt-12 pt-6 text-center text-sm text-gray-400">
+            <p>&copy; 2025 ENEEEM. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const header = document.querySelector("header");
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const overlay = document.getElementById("menuOverlay");
+
+        // Cambiar fondo del header al hacer scroll
+        window.addEventListener("scroll", () => {
+            header.classList.toggle("scrolled", window.scrollY > 50);
+        });
+
+        // Función para abrir/cerrar menú móvil
+        function toggleMenu() {
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("show");
+            overlay.classList.toggle("show");
+        }
+
+        // Script para navegación suave (Smooth Scrolling)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

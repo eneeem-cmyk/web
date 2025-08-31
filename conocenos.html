@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escuela Normal de Educación Especial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos globales */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      font-family: 'Inter', sans-serif;
+      color: #2c2c2c;
+      background-color: #fdfdfd;
+      scroll-behavior: smooth;
+      overflow-x: hidden; /* Evita el scroll horizontal cuando el menú está abierto */
+    }
+
+    /* Navegación para escritorio */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #4e232e;
+      padding: 25px 40px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 40px;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #977e5b;
+    }
+
+    /* Logo "inicio" */
+    .inicio {
+      position: fixed;
+      top: 15px;
+      left: 20px;
+      width: 55px;
+      border-radius: 5px;
+      z-index: 1001; /* Asegura que esté por encima de la barra de navegación */
+    }
+
+    /* Hero section */
+    .hero {
+      background-image: url('port.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 12px;
+      color: white;
+      max-width: 90%;
+    }
+
+    .overlay-text h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #977e5b;
+    }
+
+    .overlay-text p {
+      font-size: 1.3em;
+    }
+
+    /* Secciones generales */
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    /* Sección de información (Bienvenidos) */
+    .info-section {
+      background: linear-gradient(to bottom, #4e232e, #70303a);
+      color: white;
+    }
+
+    .info-section h1 {
+      font-size: 2.8em;
+      margin-bottom: 15px;
+    }
+
+    .info-section p {
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+
+    /* Imagen de presentación */
+    .presentacion {
+      display: block;
+      margin: 40px auto;
+      max-width: 90%;
+      width: 700px;
+      border-radius: 15px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      filter: brightness(0.98);
+      cursor: pointer;
+    }
+
+    /* Efecto al pasar el mouse */
+    .presentacion:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+      filter: brightness(1.05);
+    }
+
+    /* Sección "¿Quiénes somos?" y "Plan de Estudios" */
+    .who-we-are-section {
+      background: #ffffff;
+      color: #2c2c2c;
+      padding: 60px 20px;
+    }
+
+    .who-we-are-section h2 {
+      font-size: 2.5em;
+      color: #8d8048;
+      margin-bottom: 25px;
+    }
+
+    .who-we-are-section p {
+      max-width: 900px;
+      margin: auto;
+      text-align: justify;
+      font-size: 1.1em;
+      line-height: 1.7;
+    }
+
+    .who-we-are-section strong {
+      color: #977e5b;
+    }
+
+    /* Contenedor del botón */
+    .contenedor {
+      display: flex;
+      justify-content: center;
+      background-color: #4e232e;
+      padding: 60px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      filter: brightness(0.98);
+      cursor: pointer;
+      margin: 0 20px;
+    }
+    .contenedor:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+      filter: brightness(1.05);
+    }
+    .boton {
+      background-color: #977e5b;
+      color: white;
+      font-size: 1.2em;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .boton:hover {
+      background-color: #977e5b;
+    }
+
+    /* Sección del mapa */
+    .map-section {
+      background-color: #f9f9f9;
+      padding: 60px 20px;
+    }
+
+    .map-section h2 {
+      color: #4e232e;
+      font-size: 2.4em;
+      margin-bottom: 15px;
+    }
+
+    .map-section p {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+
+    .map-container {
+      margin: 0 auto;
+      max-width: 900px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      padding-bottom: 56.25%; /* Relación de aspecto 16:9 para iframes responsivos */
+      height: 0;
+    }
+
+    .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* --- MENÚ HAMBURGUESA Y MEDIA QUERIES --- */
+
+    /* Oculta el botón de hamburguesa por defecto en escritorio */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      z-index: 1001; /* Asegura que esté por encima de todo */
+      position: fixed;
+      top: 25px;
+      right: 40px;
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: white;
+      padding: 5px;
+    }
+
+    /* Estilos del menú desplegable (sidebar) */
+    .sidebar-menu {
+      height: 100%;
+      width: 0; /* Oculto por defecto */
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      right: 0;
+      background-color: #4e232e; /* Color similar al de la imagen */
+      overflow-x: hidden;
+      transition: 0.5s; /* Transición suave al abrir/cerrar */
+      padding-top: 60px;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .sidebar-menu a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 1.2em; /* Mayor tamaño para facilitar la interacción táctil */
+      color: #ffffff; /* Color de texto similar al de la imagen */
+      display: block;
+      transition: 0.3s;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
+    }
+
+    .sidebar-menu a:hover {
+      color: #977e5b; /* Color al pasar el mouse */
+      background-color: rgba(255, 255, 255, 0.05); /* Ligero fondo al pasar el mouse */
+    }
+
+    /* Botón para cerrar el menú (la "X") */
+    .sidebar-menu .closebtn {
+      position: absolute;
+      top: 0px;
+      right: 25px;
+      font-size: 3em;
+      margin-left: 50px;
+      color: #ffffff;
+      text-decoration: none;
+      line-height: 1; /* Alinea la X verticalmente */
+      padding: 0; /* Quita el padding del `a` normal */
+      border-bottom: none; /* Quita el borde inferior */
+    }
+
+    .sidebar-menu .closebtn:hover {
+      color: #977e5b;
+      background-color: transparent;
+    }
+
+
+ 
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: block; /
+      }
+
+      .inicio {
+        position: fixed; 
+        top: 15px;
+        left: 15px;
+        width: 45px;
+      }
+
+      .overlay-text h1 {
+        font-size: 2em;
+      }
+
+      .overlay-text p {
+        font-size: 1em;
+      }
+
+      section {
+        padding: 40px 15px;
+      }
+
+      .info-section h1 {
+        font-size: 2em;
+      }
+
+      .info-section p {
+        font-size: 1em;
+      }
+
+      .presentacion {
+        margin: 20px auto;
+      }
+
+      .who-we-are-section h2 {
+        font-size: 2em;
+      }
+
+      .who-we-are-section p {
+        font-size: 1em;
+      }
+
+      .boton {
+        font-size: 1em;
+        padding: 12px 25px;
+      }
+
+      .map-section h2 {
+        font-size: 2em;
+      }
+
+      .map-section p {
+        font-size: 1em;
+      }
+    }
+
+    /* Para pantallas medianas (tabletas) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      nav {
+        padding: 20px 30px;
+        gap: 30px;
+      }
+
+      .inicio {
+        width: 50px;
+      }
+
+      .overlay-text h1 {
+        font-size: 2.5em;
+      }
+
+      .overlay-text p {
+        font-size: 1.1em;
+      }
+
+      section {
+        padding: 50px 25px;
+      }
+
+      .info-section h1 {
+        font-size: 2.5em;
+      }
+
+      .info-section p {
+        font-size: 1.1em;
+      }
+
+      .who-we-are-section h2 {
+        font-size: 2.2em;
+      }
+
+      .who-we-are-section p {
+        font-size: 1.05em;
+      }
+    }
+         footer {
+      
+      background-color: #4e232e;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+  </style>
+<body>
+<head>
+  <nav class="desktop-nav">
+  <a href="#quienes-somos">¿Quiénes somos?</a>
+  <a href="#plan-estudios">Plan de Estudios</a>
+  <a href="#ubicacion">Ubicación</a>
+  <a href="index.html">Inicio</a>
+</nav>
+</head>
+<button class="hamburger" onclick="openNav()">&#9776;</button>
+
+<div id="mySidebar" class="sidebar-menu">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"></a>
+  <a href="#quienes-somos" onclick="closeNav()">¿Quiénes somos?</a>
+  <a href="#plan-estudios" onclick="closeNav()">Plan de Estudios</a>
+  <a href="#ubicacion" onclick="closeNav()">Ubicación</a>
+  <a href="index.html" onclick="closeNav()">inicio</a>
+</div>
+
+
+<div class="hero">
+  <div class="overlay-text">
+    <h1>Escuela Normal de Educación Especial</h1>
+    <p>Formando profesionales en inclusión educativa con compromiso y excelencia.</p>
+  </div>
+</div>
+
+<section class="info-section">
+  <h1>Bienvenidos</h1>
+  <p>El objetivo del sitio web es poner a su disposición información y materiales referentes a diversos procesos que se trabajan en la institución.</p>
+</section>
+<br>
+<img src="escuela.jpg" class="presentacion" alt="Imagen de la escuela">
+<br>
+<br>
+<section class="who-we-are-section" id="quienes-somos">
+  <br>
+  <br>
+  <h2>¿Quiénes somos?</h2>
+  <p>
+    Somos una institución formadora de licenciados en inclusión educativa. Aquí encontrarás un excelente ambiente académico, así como <strong>talleres</strong> y <strong>clubes</strong> para desarrollarte integralmente en <strong>deporte</strong> o bellas artes como <strong>danza</strong> y <strong>coro</strong>. Contamos con servicio de tutoría y una <strong>Unidad de Apoyo Psicopedagógico</strong>, donde se brinda atención a menores de la comunidad y los estudiantes participan activamente a partir de cierto semestre.
+  </p>
+</section>
+<br>
+<br>
+
+<div class="contenedor">
+  <a href="psicologia.html"><button class="boton">Unidad de Apoyo Psicopedagógico</button></a>
+</div>
+<br>
+<section class="who-we-are-section" id="plan-estudios">
+  
+  <br>
+  <br>
+  <h2>Plan de Estudios</h2>
+  <p>El plan de estudios consta de 8 semestres. Durante este tiempo, los estudiantes se preparan para trabajar en escuelas públicas, privadas, fundaciones y organizaciones civiles, apoyando a niños en situación de vulnerabilidad, incluyendo aquellos con discapacidad. Nuestro plan es avalado por la SEP, con <strong>validez oficial en toda la República Mexicana</strong>.</p>
+</section>
+<br>
+<br>
+<section class="who-we-are-section" id="ubicacion">
+    
+  <br>
+  <br>
+  <h2>Ubicación</h2>
+    <p>Nos ubicamos en la avenida Blvd. Ignacio Zaragoza S/N, Hogares de Atizapan, 52910 Cdad. López Mateos, Méx.</p>
+    <br>
+    <div class="map-container">
+    
+      <div class="map-container">
+      <iframe id="googleMap" src="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de la Escuela Normal de Educación Especial del Estado de México"></iframe>
+    </div>
+</section>
+
+<script>
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+}
+
+document.querySelectorAll('.sidebar-menu a').forEach(item => {
+    item.addEventListener('click', event => {
+        closeNav();
+    });
+});
+
+function setMapZoom() {
+    const mapIframe = document.getElementById('googleMap');
+    
+    const baseMapUrl = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d263.6928382579574!2d-99.26654792208436!3d19.59401747245904!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d21c12854de3db%3A0x3e3ee61185685c14!2sEscuela%20Normal%20de%20Educacion%20Especial%20del%20Estado%20de%20M%C3%A9xico!5e0!3m2!1ses!2smx!4v1749567219013!5m2!1ses!2smx"; // **¡IMPORTANTE! REEMPLAZA ESTO CON LA URL REAL DE TU MAPA INCORPORADO DE GOOGLE MAPS.**
+
+    let zoomLevel;
+
+    
+    if (window.innerWidth <= 900) { 
+        zoomLevel = 17; 
+    } else { 
+        zoomLevel = 15; 
+    }
+
+    let updatedSrc = baseMapUrl.replace(/4f\d+/, `4f${zoomLevel}`);
+    
+
+
+    mapIframe.src = updatedSrc;
+}
+
+
+window.onload = setMapZoom;
+
+
+window.addEventListener('resize', setMapZoom);
+
+</script>
+
+    </div>
+</section>
+
+<script>
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px"; 
+
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+ 
+ 
+}
+document.querySelectorAll('.sidebar-menu a').forEach(item => {
+    item.addEventListener('click', event => {
+        closeNav();
+    });
+});
+
+</script>
+    <footer>
+    <p><strong>"Aprender a Integrar para Servir" 
+    </p>
+    <br>
+      <p>
+    </strong> - Escuela Normal de Educación Especial de el Estado de México -</p>
+    <br>
+    <p> eneducacionespecial@gmail.com | Tel: 55 58204327</p>
+    <p>_____________________________________________________________________________________________</p>
+    <p>&copy; 2025 Todos los derechos reservados.</p>
+  </footer>
+    
+</body>
+</html>
